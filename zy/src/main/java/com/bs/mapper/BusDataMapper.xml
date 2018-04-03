@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.mapper.BusDataMapper" >
+
+    <resultMap id="BaseResultMap" type="com.bs.pojo.BusData" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="fund_num" property="fundNum" jdbcType="VARCHAR" />
+        <result column="type_id" property="typeId" jdbcType="VARCHAR" />
+        <result column="distribution_flag" property="distributionFlag" jdbcType="CHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id, user_id, create_date, fund_num, type_id, distribution_flag, del_flag
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from bus_data
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+        delete from bus_data
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.bs.pojo.BusData" >
+        insert into bus_data (id, user_id, create_date, 
+            fund_num, type_id, distribution_flag, 
+            del_flag)
+        values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+            #{fundNum,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{distributionFlag,jdbcType=CHAR}, 
+            #{delFlag,jdbcType=CHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.bs.pojo.BusData" >
+        insert into bus_data
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="fundNum != null" >
+                fund_num,
+            </if>
+            <if test="typeId != null" >
+                type_id,
+            </if>
+            <if test="distributionFlag != null" >
+                distribution_flag,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fundNum != null" >
+                #{fundNum,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null" >
+                #{typeId,jdbcType=VARCHAR},
+            </if>
+            <if test="distributionFlag != null" >
+                #{distributionFlag,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.bs.pojo.BusData" >
+        update bus_data
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="fundNum != null" >
+                fund_num = #{fundNum,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null" >
+                type_id = #{typeId,jdbcType=VARCHAR},
+            </if>
+            <if test="distributionFlag != null" >
+                distribution_flag = #{distributionFlag,jdbcType=CHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.bs.pojo.BusData" >
+        update bus_data
+        set user_id = #{userId,jdbcType=VARCHAR},
+            create_date = #{createDate,jdbcType=TIMESTAMP},
+            fund_num = #{fundNum,jdbcType=VARCHAR},
+            type_id = #{typeId,jdbcType=VARCHAR},
+            distribution_flag = #{distributionFlag,jdbcType=CHAR},
+            del_flag = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>
