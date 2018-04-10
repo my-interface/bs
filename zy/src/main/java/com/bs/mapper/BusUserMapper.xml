@@ -23,6 +23,23 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
+	 <select id="selectFindListBylogin" resultMap="BaseResultMap" parameterType="com.bs.pojo.BusUser" >
+        select 
+        <include refid="Base_Column_List" />
+        from bus_user a
+        <where>
+        	a.del_flag=0
+        	<if test="loginName != null and loginName != '' ">
+        		and login_name=#{loginName}
+        	</if>
+        	<if test="">
+        		and password=#{password}
+        	</if>
+        </where>
+    </select>
+	
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
         delete from bus_user
         where id = #{id,jdbcType=VARCHAR}

@@ -1,5 +1,7 @@
 package com.bs.mapper;
 
+import java.util.List;
+
 import com.bs.pojo.BusUser;
 
 public interface BusUserMapper {
@@ -14,4 +16,12 @@ public interface BusUserMapper {
     int updateByPrimaryKeySelective(BusUser record);
 
     int updateByPrimaryKey(BusUser record);
+    
+    /**
+     * 判断账号密码
+     * @param user
+     * @return
+     */
+    List<BusUser> selectFindListBylogin(BusUser user);
+    
 }

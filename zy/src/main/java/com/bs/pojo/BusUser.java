@@ -95,4 +95,12 @@ public class BusUser {
     public void setTypeId(String typeId) {
         this.typeId = typeId == null ? null : typeId.trim();
     }
+
+	@Override
+	public String toString() {
+		return "BusUser [id=" + id + ", name=" + name + ", loginName=" + loginName + ", password=" + password
+				+ ", delFlag=" + delFlag + ", departmentId=" + departmentId + ", typeId=" + typeId + "]";
+	}
+    
+    
 }
