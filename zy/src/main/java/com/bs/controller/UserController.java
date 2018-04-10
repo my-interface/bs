@@ -52,6 +52,7 @@ public class UserController {
 						jsonObject.put("depart_flag", "yisheng");
 					}
 					
+					jsonObject.put("user",busUser2 );
 					log.info("登录用户名："+busUser.getLoginName()+",密码："+busUser.getPassword()+"登录成功");
 				}else{
 					//账号密码错误失败	
