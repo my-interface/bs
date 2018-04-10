@@ -30,9 +30,9 @@ public class UserController {
 	 */
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response) {
-		// String user = request.getParameter("user");
 		try {
-			String user = "{name:\"1\",password:\"1\"}";
+			 String user = request.getParameter("user");
+			//String user = "{loginName:\"admin\",password:\"123456\"}";
 			JSONObject jsonObject = new JSONObject();
 			JSONObject parseObject = JSON.parseObject(user);
 			BusUser busUser = JSON.toJavaObject(parseObject, BusUser.class);
