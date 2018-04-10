@@ -37,6 +37,7 @@ public class MyEncodFilter implements Filter{
         String servletPath=httpServletRequest.getServletPath();
        List<String> list = new ArrayList<>();
        list.add("/user/login");
+       list.add("/user/logout");
         if(list.contains(servletPath)){
             filter.doFilter(httpServletRequest, httpServletResponse);
             return;

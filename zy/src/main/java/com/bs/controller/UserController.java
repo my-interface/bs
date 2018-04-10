@@ -31,8 +31,8 @@ public class UserController {
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			 String user = request.getParameter("user");
-			//String user = "{loginName:\"admin\",password:\"123456\"}";
+			// String user = request.getParameter("user");
+			String user = "{loginName:\"admin\",password:\"123456\"}";
 			JSONObject jsonObject = new JSONObject();
 			JSONObject parseObject = JSON.parseObject(user);
 			BusUser busUser = JSON.toJavaObject(parseObject, BusUser.class);
@@ -41,10 +41,17 @@ public class UserController {
 				//进行校验
 				List<BusUser> list = userService.selectFindListBylogin(busUser);
 				if(list!=null&&list.size()>0){
-					request.getSession().setAttribute("currentUser", list.get(0));
-					//登录成功
+					BusUser busUser2 = list.get(0);
+					request.getSession().setAttribute("currentUser", busUser2);
 					jsonObject.put("msg", "登录成功");
 					jsonObject.put("status", "200");
+					if("3".equals(busUser2.getDepartmentId())){
+						//后勤部
+						jsonObject.put("depart_flag", "houqin");
+					}else{
+						jsonObject.put("depart_flag", "yisheng");
+					}
+					
 					log.info("登录用户名："+busUser.getLoginName()+",密码："+busUser.getPassword()+"登录成功");
 				}else{
 					//账号密码错误失败	
@@ -66,14 +73,22 @@ public class UserController {
 
 	}
 	
-	@RequestMapping("/test")
-	public void test(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		JSONObject jsonObject = new JSONObject();
-		response.setContentType("text/html;charset=utf-8");
-		response.setCharacterEncoding("utf-8");
-		jsonObject.put("1", "sabilipeng");
-		response.getWriter().write(jsonObject.toJSONString());
+	
+	/***
+	 * 退出方法
+	 * @return
+	 */
+	@RequestMapping("/logout")
+	public void logout(HttpServletRequest request, HttpServletResponse response) {
+		
+			try {
+				request.getSession().removeAttribute("currentUser");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
+	
 	
 	@RequestMapping("/get")
 	public void get(HttpServletRequest request,HttpServletResponse response) throws IOException{
