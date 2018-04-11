@@ -31,20 +31,27 @@ public class UserController {
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			// String user = request.getParameter("user");
-			String user = "{loginName:\"admin\",password:\"123456\"}";
+			 //String user = request.getParameter("user");
+			String loginName = request.getParameter("loginName");
+			String password = request.getParameter("password");
+			 
+			//String user = "{loginName:\""+loginName+",password:"+password+"}";
+			//String user = "{loginName:\"admin\",password:\"123456\"}";
 			JSONObject jsonObject = new JSONObject();
-			JSONObject parseObject = JSON.parseObject(user);
-			BusUser busUser = JSON.toJavaObject(parseObject, BusUser.class);
-			if (busUser != null && StringUtils.isNotBlank(busUser.getLoginName())
-					&& StringUtils.isNotBlank(busUser.getPassword())) {
+//			JSONObject parseObject = JSON.parseObject(user);
+//			BusUser busUser = JSON.toJavaObject(parseObject, BusUser.class);
+			if ( StringUtils.isNotBlank(loginName)
+					&& StringUtils.isNotBlank(password)) {
+				BusUser busUser = new BusUser();
+				busUser.setLoginName(loginName);
+				busUser.setPassword(password);
 				//进行校验
 				List<BusUser> list = userService.selectFindListBylogin(busUser);
 				if(list!=null&&list.size()>0){
 					BusUser busUser2 = list.get(0);
 					request.getSession().setAttribute("currentUser", busUser2);
 					jsonObject.put("msg", "登录成功");
-					jsonObject.put("status", "200");
+					jsonObject.put("status", 200);
 					if("3".equals(busUser2.getDepartmentId())){
 						//后勤部
 						jsonObject.put("depart_flag", "houqin");
@@ -57,16 +64,15 @@ public class UserController {
 				}else{
 					//账号密码错误失败	
 					jsonObject.put("msg", "账号或密码错误");
-					jsonObject.put("status", "500");
+					jsonObject.put("status", 500);
 				}
 				
 			} else {
 				//账号密码为空失败	
 				jsonObject.put("msg", "账号或密码不能为空");
-				jsonObject.put("status", "500");
+				jsonObject.put("status", 500);
 			}
 			response.getWriter().write(jsonObject.toJSONString());
-			System.out.println(busUser);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
