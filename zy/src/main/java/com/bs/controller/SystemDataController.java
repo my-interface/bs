@@ -1,5 +1,6 @@
 package com.bs.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +28,12 @@ public class SystemDataController {
 	@RequestMapping("getData")
 	public void getData(HttpServletRequest request, HttpServletResponse response) {
 			try {
+				HashMap<Object, Object> hashMap = new HashMap<>();
+				hashMap.put("msg", "获取成功");
+				hashMap.put("status", 200);
 				List<FloorBean> selectAllList2 = busDepartmentService.selectAllList2();
-				Object json = JSON.toJSON(selectAllList2);
+				hashMap.put("data", selectAllList2);
+				Object json = JSON.toJSON(hashMap);
 				response.getWriter().write(json.toString());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

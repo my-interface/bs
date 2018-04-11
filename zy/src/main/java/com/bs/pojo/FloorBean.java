@@ -16,9 +16,8 @@ public class FloorBean {
 	private List<RoomBean> list=new ArrayList<RoomBean>();
 
 
-	
-	
-	
+
+
 	public String getId() {
 		return id;
 	}

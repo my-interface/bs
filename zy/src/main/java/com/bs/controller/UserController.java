@@ -3,6 +3,7 @@ package com.bs.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,15 +32,9 @@ public class UserController {
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			 //String user = request.getParameter("user");
 			String loginName = request.getParameter("loginName");
 			String password = request.getParameter("password");
-			 
-			//String user = "{loginName:\""+loginName+",password:"+password+"}";
-			//String user = "{loginName:\"admin\",password:\"123456\"}";
 			JSONObject jsonObject = new JSONObject();
-//			JSONObject parseObject = JSON.parseObject(user);
-//			BusUser busUser = JSON.toJavaObject(parseObject, BusUser.class);
 			if ( StringUtils.isNotBlank(loginName)
 					&& StringUtils.isNotBlank(password)) {
 				BusUser busUser = new BusUser();

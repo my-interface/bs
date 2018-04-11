@@ -2,6 +2,7 @@ package com.bs.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.Filter;
@@ -13,7 +14,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.bs.pojo.BusUser;
+
 
 public class MyEncodFilter implements Filter{
 
@@ -42,13 +46,12 @@ public class MyEncodFilter implements Filter{
             filter.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
-        
-        //从session中获取用户并判断用户是否登录过，如果没有登录过则重定向到登录界面
-        BusUser user = (BusUser)httpServletRequest.getSession().getAttribute("currentUser");
-		if (user == null) {
-			httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/user/login");
-			return;
-		}
+        //判断当前用户
+       	 BusUser user = (BusUser)httpServletRequest.getSession().getAttribute("currentUser");
+			if (user == null) {
+				httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/user/login");
+				return;
+			}
         
         //放行
         filter.doFilter(httpServletRequest, httpServletResponse);
