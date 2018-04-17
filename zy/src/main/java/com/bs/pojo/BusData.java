@@ -17,6 +17,8 @@ public class BusData {
      */
     private String userId;
 
+    private BusUser user;
+    
     /**
      * 创建时间
      */
@@ -31,18 +33,40 @@ public class BusData {
      * 单位
      */
     private String typeId;
+    
+    private BusTypeFund typeName;
+    
 
     /**
      * 配送标记，0未配送，1配送
      */
     private String distributionFlag;
 
+    
     /**
      * 删除标记
      */
     private String delFlag;
 
-    public String getId() {
+    
+    
+    public BusUser getUser() {
+		return user;
+	}
+
+	public void setUser(BusUser user) {
+		this.user = user;
+	}
+
+	public BusTypeFund getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(BusTypeFund typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getId() {
         return id;
     }
 

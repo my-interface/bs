@@ -23,6 +23,28 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
+	<select id="findList" resultType="com.bs.pojo.BusData">
+		select 
+		a.id as "id", 
+		a.user_id as "user.id",
+		u.`name` AS "user.name",
+		b.name AS "typeName.name",
+   		b.unit  AS "typeName.unit",
+   
+		a.create_date as "createDate" ,
+		a.fund_num as "fundNum", 
+		a.type_id as "typeId",
+		a.distribution_flag as "distribution_flag"
+		FROM
+		`bus_data` a 
+		LEFT JOIN `bus_type_fund` b 
+		ON b.`del_flag` = '0' AND a.`del_flag`='0'
+		AND a.`type_id` = b.`id` 
+		 LEFT JOIN `bus_user` u
+    	ON u.`del_flag`='0' AND u.`id`=a.`user_id`
+	</select>	
+
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
         delete from bus_data
         where id = #{id,jdbcType=VARCHAR}
@@ -36,6 +58,51 @@
             #{fundNum,jdbcType=VARCHAR}, #{typeId,jdbcType=VARCHAR}, #{distributionFlag,jdbcType=CHAR}, 
             #{delFlag,jdbcType=CHAR})
     </insert>
+
+<insert id="insertLarge"  parameterType="java.util.List" useGeneratedKeys="true">
+    	<selectKey resultType="long" keyProperty="id" order="AFTER">  
+	        SELECT  
+	        LAST_INSERT_ID()  
+    	</selectKey> 
+       insert into bus_data (id, user_id, create_date, 
+            fund_num, type_id, distribution_flag, 
+            del_flag)
+        values 
+        <foreach collection="list" item="item" index="index" separator="," close=";">  
+            (#{item.id,jdbcType=VARCHAR}, #{item.userId,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, 
+            #{item.fundNum,jdbcType=VARCHAR}, #{item.typeId,jdbcType=VARCHAR}, #{item.distributionFlag,jdbcType=CHAR}, 
+            #{item.delFlag,jdbcType=CHAR})
+   		 </foreach>
+    </insert>
+
+	 <update id="updateCommonData" parameterType="java.util.List" >
+        update bus_data
+        <set >
+                distribution_flag ='1'
+        </set>
+       <where>
+       		id in
+       	<foreach collection="list" index="index" item="item"  separator="," open="(" close=")">
+       		 #{item.id,jdbcType=BIGINT}
+       	</foreach>
+       </where>
+    </update>
+	
+	 <update id="deleteCommonData" parameterType="java.util.List" >
+        update bus_data
+        <set >
+                del_flag ='1'
+        </set>
+       <where>
+       		id in
+       	<foreach collection="list" index="index" item="item"  separator="," open="(" close=")">
+       		 #{item.id,jdbcType=BIGINT}
+       	</foreach>
+       </where>
+    </update>
+	
+
+
 
     <insert id="insertSelective" parameterType="com.bs.pojo.BusData" >
         insert into bus_data

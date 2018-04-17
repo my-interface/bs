@@ -69,4 +69,13 @@ public class BusTypeFund {
     public void setTypeId(String typeId) {
         this.typeId = typeId == null ? null : typeId.trim();
     }
+
+	@Override
+	public String toString() {
+		return "BusTypeFund [id=" + id + ", name=" + name + ", unit=" + unit + ", delFlag=" + delFlag + ", typeId="
+				+ typeId + "]";
+	}
+    
+    
+    
 }

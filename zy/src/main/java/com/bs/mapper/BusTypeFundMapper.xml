@@ -32,6 +32,35 @@
         values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
             #{delFlag,jdbcType=CHAR}, #{typeId,jdbcType=VARCHAR})
     </insert>
+    
+    <insert id="insertLarge"  parameterType="java.util.List" useGeneratedKeys="true">
+    	<selectKey resultType="long" keyProperty="id" order="AFTER">  
+	        SELECT  
+	        LAST_INSERT_ID()  
+    	</selectKey> 
+        insert into bus_type_fund (id, name, unit, 
+            del_flag, type_id)
+        values 
+        <foreach collection="list" item="item" index="index" separator="," close=";">  
+            ( #{item.id,jdbcType=VARCHAR},#{item.name,jdbcType=VARCHAR}, #{item.unit,jdbcType=VARCHAR}, 
+            #{item.delFlag,jdbcType=CHAR}, #{item.typeId,jdbcType=VARCHAR})
+   		 </foreach>
+    </insert>
+
+	 <update id="deleteLarge" parameterType="java.util.List" >
+        update bus_type_fund
+        <set >
+                del_flag ='1'
+        </set>
+       <where>
+       		id in
+       	<foreach collection="list" index="index" item="item"  separator="," open="(" close=")">
+       		 #{item.id,jdbcType=BIGINT}
+       	</foreach>
+       </where>
+    </update>
+
+
 
     <insert id="insertSelective" parameterType="com.bs.pojo.BusTypeFund" >
         insert into bus_type_fund

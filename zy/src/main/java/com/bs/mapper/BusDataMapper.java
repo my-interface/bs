@@ -1,5 +1,7 @@
 package com.bs.mapper;
 
+import java.util.List;
+
 import com.bs.pojo.BusData;
 
 public interface BusDataMapper {
@@ -14,4 +16,33 @@ public interface BusDataMapper {
     int updateByPrimaryKeySelective(BusData record);
 
     int updateByPrimaryKey(BusData record);
+
+    /***
+     * 批量插入普通数据
+     * @param list
+     * @return
+     */
+	int insertLarge(List<BusData> list);
+	
+	/**
+	 * 查询所有的数据
+	 * @return
+	 */
+	List<BusData> findList();
+
+	/**
+	 * 修改为已配送
+	 * @param list
+	 * @return
+	 */
+	int updateCommonData(List<BusData> list);
+	
+	/**
+	 * 删除普通数据
+	 * @param list
+	 * @return
+	 */
+	
+	int deleteCommonData(List<BusData> list);
+	
 }
