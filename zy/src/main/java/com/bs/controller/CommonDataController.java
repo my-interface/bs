@@ -1,6 +1,7 @@
 package com.bs.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.bs.pojo.BusData;
-import com.bs.pojo.BusTypeFund;
 import com.bs.pojo.BusUser;
 import com.bs.service.BusDataService;
 
@@ -33,10 +33,13 @@ public class CommonDataController {
 	@RequestMapping(value="addCommonData",method=RequestMethod.POST)
 	public void addCommonData(HttpServletRequest request, HttpServletResponse response) {
 			try {
+				ArrayList<String> strList = new ArrayList<>();
 				String arrays = request.getParameter("map");
 				List<BusData> list = JSON.parseArray(arrays, BusData.class);
 				for (BusData busData : list) {
-					busData.setId(UUID.randomUUID().toString().replace("-", ""));
+					String uid = UUID.randomUUID().toString().replace("-", "");
+					strList.add(uid);
+					busData.setId(uid);
 					BusUser user = (BusUser)request.getSession().getAttribute("currentUser");
 					busData.setUserId(user.getId());
 					busData.setDistributionFlag("0");
@@ -47,7 +50,7 @@ public class CommonDataController {
 				HashMap<Object, Object> hashMap = new HashMap<>();
 				hashMap.put("msg", "添加成功");
 				hashMap.put("status", 200);
-				hashMap.put("count", count);
+				hashMap.put("ids", strList);
 				response.getWriter().write(JSON.toJSONString(hashMap));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

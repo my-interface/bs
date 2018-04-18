@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bs.pojo.BusUser;
@@ -27,7 +28,7 @@ public class UserController {
 	 * 登录方法
 	 * @return
 	 */
-	@RequestMapping("/login")
+	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public void login(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String loginName = request.getParameter("loginName");
@@ -78,7 +79,7 @@ public class UserController {
 	 * 退出方法
 	 * @return
 	 */
-	@RequestMapping("/logout")
+	@RequestMapping(value="/logout",method=RequestMethod.POST)
 	public void logout(HttpServletRequest request, HttpServletResponse response) {
 		
 			try {
