@@ -176,7 +176,21 @@
 	    <artifactId>commons-lang3</artifactId>
 	    <version>3.2.1</version>
 		</dependency>
-
+		
+		<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>dubbo</artifactId>
+	    <version>2.5.3</version>
+	    	 <!--去除引入的spring-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+	    
+		</dependency>
+		
         
           
     </dependencies>  

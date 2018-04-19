@@ -1,6 +1,8 @@
 package com.bs.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.alibaba.dubbo.common.utils.IOUtils;
 import com.alibaba.fastjson.JSON;
 import com.bs.pojo.BusData;
 import com.bs.pojo.BusUser;
@@ -26,15 +29,34 @@ public class CommonDataController {
 
 	@Autowired
 	private BusDataService busDataService;
-
+	
+	/**
+	 * 将数据转化为流
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public String getAllCp(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(request.getInputStream()));
+			String body = IOUtils.read(reader);
+			return body;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	/***
 	 * 批量增加普通数据
 	 */
 	@RequestMapping(value="addCommonData",method=RequestMethod.POST)
 	public void addCommonData(HttpServletRequest request, HttpServletResponse response) {
 			try {
+				String arrays =	getAllCp(request, response);
 				ArrayList<String> strList = new ArrayList<>();
-				String arrays = request.getParameter("map");
+				//String arrays = request.getParameter("map");
 				List<BusData> list = JSON.parseArray(arrays, BusData.class);
 				for (BusData busData : list) {
 					String uid = UUID.randomUUID().toString().replace("-", "");
@@ -82,7 +104,8 @@ public class CommonDataController {
 	@RequestMapping(value="updateCommonData",method=RequestMethod.POST)
 	public void updateCommonData(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String arrays = request.getParameter("map");
+			String arrays =	getAllCp(request, response);
+			//String arrays = request.getParameter("map");
 			List<BusData> list = JSON.parseArray(arrays, BusData.class);
 			int count = busDataService.updateCommonData(list);
 			
@@ -103,7 +126,8 @@ public class CommonDataController {
 	@RequestMapping(value="deleteCommonData",method=RequestMethod.POST)
 	public void deleteCommonData(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String arrays = request.getParameter("map");
+			String arrays =	getAllCp(request, response);
+			//String arrays = request.getParameter("map");
 			List<BusData> list = JSON.parseArray(arrays, BusData.class);
 			int count = busDataService.deleteCommonData(list);
 			

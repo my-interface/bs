@@ -32,10 +32,12 @@ public class BusData {
     /**
      * 单位
      */
-    private String typeId;
+   // private String typeId;
     
     private BusTypeFund typeName;
     
+    
+   // private String keshiName;
 
     /**
      * 配送标记，0未配送，1配送
@@ -50,7 +52,17 @@ public class BusData {
 
     
     
-    public BusUser getUser() {
+    
+    
+    /*public String getKeshiName() {
+		return keshiName;
+	}
+
+	public void setKeshiName(String keshiName) {
+		this.keshiName = keshiName;
+	}
+*/
+	public BusUser getUser() {
 		return user;
 	}
 
@@ -98,13 +110,13 @@ public class BusData {
         this.fundNum = fundNum == null ? null : fundNum.trim();
     }
 
-    public String getTypeId() {
+  /*  public String getTypeId() {
         return typeId;
     }
 
     public void setTypeId(String typeId) {
         this.typeId = typeId == null ? null : typeId.trim();
-    }
+    }*/
 
     public String getDistributionFlag() {
         return distributionFlag;

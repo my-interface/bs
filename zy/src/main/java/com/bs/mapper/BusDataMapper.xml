@@ -23,25 +23,52 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
-	<select id="findList" resultType="com.bs.pojo.BusData">
-		select 
-		a.id as "id", 
-		a.user_id as "user.id",
-		u.`name` AS "user.name",
-		b.name AS "typeName.name",
-   		b.unit  AS "typeName.unit",
+	<resultMap id="MyResultMap" type="com.bs.pojo.MyData" >
+        <result column="keshiName" property="keshiName" jdbcType="VARCHAR" />
+        <result column="typeId" property="typeId" jdbcType="VARCHAR" />
+        <collection property="data" ofType="com.bs.pojo.BusData">
+        	 <id column="id" property="id" jdbcType="VARCHAR" />
+        	  <result column="createDate" property="createDate" jdbcType="DATE" />
+        	  <result column="fundNum" property="fundNum" jdbcType="VARCHAR" />
+        	  <result column="distribution_flag" property="distributionFlag" jdbcType="VARCHAR" />
+	        <association property="typeName" javaType="com.bs.pojo.BusTypeFund">
+        	  <result column="typeName_name" property="name" jdbcType="VARCHAR" />
+        	  <result column="typeName_unit" property="unit" jdbcType="VARCHAR" />
+	        </association>
+	        <association property="user" javaType="com.bs.pojo.BusUser">
+        	 <id column="user_id" property="id" jdbcType="VARCHAR" />
+        	  <result column="user_name" property="name" jdbcType="VARCHAR" />
+	        </association>
+        </collection>
+    </resultMap>
+
+
+
+	<select id="findList" resultMap="MyResultMap">
+		SELECT 
+  a.id AS "id",
+  a.user_id AS "user_id",
+  u.`name` AS "user_name",
+  b.name AS "typeName_name",
+  b.unit AS "typeName_unit",
+  a.create_date AS "createDate",
+  c.`type_name` AS "keshiName",
+  a.fund_num AS "fundNum",
+  a.type_id AS "typeId",
+  a.distribution_flag AS "distribution_flag" 
+FROM
+  `bus_data` a 
+  LEFT JOIN `bus_type_fund` b 
+    ON b.`del_flag` = '0' 
+    AND a.`del_flag` = '0' 
+    AND a.`type_id` = b.`id` 
+  LEFT JOIN `bus_user` u 
+    ON u.`del_flag` = '0' 
+    AND u.`id` = a.`user_id` 
+   LEFT JOIN `bus_type` c
+   ON c.`del_flag`='0' AND c.`id`= b.`type_id`
    
-		a.create_date as "createDate" ,
-		a.fund_num as "fundNum", 
-		a.type_id as "typeId",
-		a.distribution_flag as "distribution_flag"
-		FROM
-		`bus_data` a 
-		LEFT JOIN `bus_type_fund` b 
-		ON b.`del_flag` = '0' AND a.`del_flag`='0'
-		AND a.`type_id` = b.`id` 
-		 LEFT JOIN `bus_user` u
-    	ON u.`del_flag`='0' AND u.`id`=a.`user_id`
+   ORDER BY a.`distribution_flag`
 	</select>	
 
 
