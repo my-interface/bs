@@ -32,7 +32,7 @@ public class BusData {
     /**
      * 单位
      */
-   // private String typeId;
+    private String typeId;
     
     private BusTypeFund typeName;
     
@@ -110,13 +110,13 @@ public class BusData {
         this.fundNum = fundNum == null ? null : fundNum.trim();
     }
 
-  /*  public String getTypeId() {
+    public String getTypeId() {
         return typeId;
     }
 
     public void setTypeId(String typeId) {
         this.typeId = typeId == null ? null : typeId.trim();
-    }*/
+    }
 
     public String getDistributionFlag() {
         return distributionFlag;

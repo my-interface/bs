@@ -25,13 +25,13 @@
 
 	<resultMap id="MyResultMap" type="com.bs.pojo.MyData" >
         <result column="keshiName" property="keshiName" jdbcType="VARCHAR" />
-        <result column="typeId" property="typeId" jdbcType="VARCHAR" />
         <collection property="data" ofType="com.bs.pojo.BusData">
         	 <id column="id" property="id" jdbcType="VARCHAR" />
         	  <result column="createDate" property="createDate" jdbcType="DATE" />
         	  <result column="fundNum" property="fundNum" jdbcType="VARCHAR" />
         	  <result column="distribution_flag" property="distributionFlag" jdbcType="VARCHAR" />
 	        <association property="typeName" javaType="com.bs.pojo.BusTypeFund">
+		       <id column="typeId" property="id" jdbcType="VARCHAR" />
         	  <result column="typeName_name" property="name" jdbcType="VARCHAR" />
         	  <result column="typeName_unit" property="unit" jdbcType="VARCHAR" />
 	        </association>
