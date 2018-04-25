@@ -59,16 +59,13 @@
 FROM
   `bus_data` a 
   LEFT JOIN `bus_type_fund` b 
-    ON b.`del_flag` = '0' 
-    AND a.`del_flag` = '0' 
-    AND a.`type_id` = b.`id` 
+    ON  a.`type_id` = b.`id` 
   LEFT JOIN `bus_user` u 
-    ON u.`del_flag` = '0' 
-    AND u.`id` = a.`user_id` 
-   LEFT JOIN `bus_type` c
-   ON c.`del_flag`='0' AND c.`id`= b.`type_id`
-   
-   ORDER BY a.`distribution_flag`
+    ON u.`id` = a.`user_id` 
+  LEFT JOIN `bus_type` c 
+    ON c.`id` = b.`type_id` 
+   WHERE a.`del_flag`='0' AND b.`del_flag`=0 AND c.`del_flag`=0 AND u.del_flag=0
+ORDER BY a.`distribution_flag` 
 	</select>	
 
 
