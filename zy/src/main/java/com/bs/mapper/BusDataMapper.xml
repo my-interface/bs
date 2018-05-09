@@ -53,6 +53,7 @@
         	  		<id column="c_id" property="id" jdbcType="VARCHAR" />
         	  		<result column="c_n" property="number" jdbcType="VARCHAR" />
         	  		<result column="peisong_flag" property="peisongFlag" jdbcType="VARCHAR" />
+        	  		<result column="date" property="date" jdbcType="DATE" />
         	  		<result column="c_name" property="name" jdbcType="VARCHAR" />
         	  		<result column="unit" property="unit" jdbcType="VARCHAR" />
         	  </collection>
@@ -67,6 +68,7 @@
 		  bd.id  as c_id,
   		  bd.`fund_num` as c_n,
   		  bd.`distribution_flag` as peisong_flag,
+  		  bd.`create_date` as date,
 		  btf.name AS c_name,
 		  btf.unit 
     </sql>
