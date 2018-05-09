@@ -3,6 +3,7 @@ package com.bs.mapper;
 import java.util.List;
 
 import com.bs.pojo.BusData;
+import com.bs.pojo.FloorBean;
 
 public interface BusDataMapper {
     int deleteByPrimaryKey(String id);
@@ -28,7 +29,7 @@ public interface BusDataMapper {
 	 * 查询所有的数据
 	 * @return
 	 */
-	List<BusData> findList();
+	List<FloorBean> findList();
 
 	/**
 	 * 修改为已配送

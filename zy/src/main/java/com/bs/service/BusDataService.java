@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bs.mapper.BusDataMapper;
 import com.bs.pojo.BusData;
+import com.bs.pojo.FloorBean;
 
 @Service
 public class BusDataService {
@@ -27,7 +28,7 @@ public class BusDataService {
 	 * 查询所有数据
 	 * @return
 	 */
-	public List<BusData> findList(){
+	public List<FloorBean> findList(){
 		return busDataMapper.findList();
 	}
 

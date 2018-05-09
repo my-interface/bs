@@ -21,6 +21,7 @@ import com.alibaba.dubbo.common.utils.IOUtils;
 import com.alibaba.fastjson.JSON;
 import com.bs.pojo.BusData;
 import com.bs.pojo.BusUser;
+import com.bs.pojo.FloorBean;
 import com.bs.service.BusDataService;
 
 @Controller
@@ -86,7 +87,7 @@ public class CommonDataController {
 	@RequestMapping(value="getCommonData",method=RequestMethod.POST)
 	public void getCommonData(HttpServletRequest request, HttpServletResponse response) {
 			try {
-				List<BusData> list = busDataService.findList();			
+				List<FloorBean> list = busDataService.findList();			
 				HashMap<Object, Object> hashMap = new HashMap<>();
 				hashMap.put("msg", "查询成功");
 				hashMap.put("status", 200);

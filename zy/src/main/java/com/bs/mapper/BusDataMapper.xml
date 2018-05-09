@@ -42,9 +42,55 @@
         </collection>
     </resultMap>
 
+<resultMap id="FloorBeanMap" type="com.bs.pojo.FloorBean" >
+        <id column="a_id" property="id" jdbcType="VARCHAR" />
+        <result column="a_name" property="name" jdbcType="VARCHAR" />
+        <collection property="list" ofType="com.bs.pojo.RoomBean">
+        	 <id column="b_id" property="id" jdbcType="VARCHAR" />
+        	  <result column="b_name" property="name" jdbcType="VARCHAR" />
+        	  <collection property="neeadBean" ofType="java.util.Map">
+        	  		
+        	  		<id column="c_id" property="id" jdbcType="VARCHAR" />
+        	  		<result column="c_n" property="number" jdbcType="VARCHAR" />
+        	  		<result column="peisong_flag" property="peisongFlag" jdbcType="VARCHAR" />
+        	  		<result column="c_name" property="name" jdbcType="VARCHAR" />
+        	  		<result column="unit" property="unit" jdbcType="VARCHAR" />
+        	  </collection>
+        </collection>
+    </resultMap>
+	
+	  <sql id="FloorBean_List" >
+      	  dep.id AS a_id,
+		  dep.`department_name` AS a_name,
+		  bt.id AS b_id,
+		  bt.type_name AS b_name,
+		  bd.id  as c_id,
+  		  bd.`fund_num` as c_n,
+  		  bd.`distribution_flag` as peisong_flag,
+		  btf.name AS c_name,
+		  btf.unit 
+    </sql>
+
+	<select id="findList" resultMap="FloorBeanMap"  >
+        select 
+        <include refid="FloorBean_List" />
+       FROM `bus_data` bd
+		LEFT JOIN `bus_type_fund` btf
+		ON bd.`type_id`=btf.`id`
+		LEFT JOIN `bus_type` bt
+		ON btf.`type_id`= bt.`id`
+		LEFT JOIN `bus_department` dep
+		ON bt.`department_id`=  dep.`id`
+		<where>
+			 bd.`del_flag`='0' AND btf.`del_flag`= 0
+			AND bt.`del_flag`='0' AND dep.`del_flag`='0'
+		</where>
+    </select>
 
 
-	<select id="findList" resultMap="MyResultMap">
+
+
+	<select id="findList2" resultMap="MyResultMap">
 		SELECT 
   a.id AS "id",
   a.user_id AS "user_id",
